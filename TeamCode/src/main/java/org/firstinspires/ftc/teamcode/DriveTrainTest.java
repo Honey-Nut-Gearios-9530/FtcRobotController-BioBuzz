@@ -17,7 +17,7 @@ public class DriveTrainTest extends OpMode {
     private DcMotorEx backRightMotor;
     private DcMotorEx frontLeftMotor;
     private DcMotorEx frontRightMotor;
-
+    private DcMotorEx[] drivetrain;
     @Override
     public void init() {
         backLeftMotor = hardwareMap.get(DcMotorEx.class, "backLeftMotor");
@@ -31,7 +31,7 @@ public class DriveTrainTest extends OpMode {
         frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         frontRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
 
-        DcMotorEx[] drivetrain = {backLeftMotor, backRightMotor, frontLeftMotor, frontRightMotor};
+        drivetrain = new DcMotorEx[] {backLeftMotor, backRightMotor, frontLeftMotor, frontRightMotor};
         for (DcMotorEx motor : drivetrain) {
             motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
@@ -47,30 +47,40 @@ public class DriveTrainTest extends OpMode {
 
     @Override
     public void loop() {
-        double drive = -gamepad1.left_stick_x; // WHY DOES THIS WORK
+        double drive = gamepad1.left_stick_x; // WHY DOES THIS WORK
         double turn = gamepad1.right_stick_x;
-        double strafe = gamepad1.left_stick_y;
+        double strafe = -gamepad1.left_stick_y;
 
         telemetry.addData("-gamepad1.left_stick_y", -gamepad1.left_stick_y);
         telemetry.addData("-gamepad1.right_stick_y", -gamepad1.right_stick_y);
         telemetry.addData("gamepad1.left_stick_x", gamepad1.left_stick_x);
         telemetry.addData("gamepad1.right_stick_x", gamepad1.right_stick_x);
+        //this is the hadbreak
+        if ((drive == 0) && (turn == 0) && (strafe == 0)) {
+            for (DcMotorEx motor : drivetrain) {
+                motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                motor.setPower(0);
+            }
+        } else { // this lets it drive if you are driving the bot
+            for (DcMotorEx motor : drivetrain) {
+                motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+            }
+            double frontLeftPower = Range.clip(drive + strafe + turn, -1, 1);
+            double frontRightPower = Range.clip(drive - strafe - turn, -1, 1);
+            double backLeftPower = Range.clip(drive - strafe + turn, -1, 1);
+            double backRightPower = Range.clip(drive + strafe - turn, -1, 1);
 
-        double frontLeftPower = Range.clip(drive + strafe + turn, -1, 1);
-        double frontRightPower = Range.clip(drive - strafe - turn, -1, 1);
-        double backLeftPower = Range.clip(drive - strafe + turn, -1, 1);
-        double backRightPower = Range.clip(drive + strafe - turn, -1, 1);
+            telemetry.addLine();
+            telemetry.addData("frontLeftPower", frontLeftPower);
+            telemetry.addData("backLeftPower", backLeftPower);
+            telemetry.addData("frontRightPower", frontRightPower);
+            telemetry.addData("backRightPower", backRightPower);
+            telemetry.update();
 
-        telemetry.addLine();
-        telemetry.addData("frontLeftPower", frontLeftPower);
-        telemetry.addData("backLeftPower", backLeftPower);
-        telemetry.addData("frontRightPower", frontRightPower);
-        telemetry.addData("backRightPower", backRightPower);
-        telemetry.update();
-
-        frontLeftMotor.setPower(frontLeftPower);
-        backLeftMotor.setPower(backLeftPower);
-        frontRightMotor.setPower(frontRightPower);
-        backRightMotor.setPower(backRightPower);
+            frontLeftMotor.setPower(frontLeftPower);
+            backLeftMotor.setPower(backLeftPower);
+            frontRightMotor.setPower(frontRightPower);
+            backRightMotor.setPower(backRightPower);
+        }
     }
 }
