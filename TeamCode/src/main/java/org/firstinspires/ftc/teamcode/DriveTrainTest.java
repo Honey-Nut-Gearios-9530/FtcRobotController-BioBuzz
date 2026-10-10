@@ -48,19 +48,19 @@ public class DriveTrainTest extends OpMode {
 
     @Override
     public void loop() {
-        double drive = gamepad1.left_stick_x; // WHY DOES THIS WORK
+        double strafe = gamepad1.left_stick_x; // WHY DOES THIS WORK
         double turn = gamepad1.right_stick_x;
-        double strafe = -gamepad1.left_stick_y;
+        double drive = -gamepad1.left_stick_y;
 
         telemetry.addData("-gamepad1.left_stick_y", -gamepad1.left_stick_y);
         telemetry.addData("-gamepad1.right_stick_y", -gamepad1.right_stick_y);
         telemetry.addData("gamepad1.left_stick_x", gamepad1.left_stick_x);
         telemetry.addData("gamepad1.right_stick_x", gamepad1.right_stick_x);
 
-        double frontLeftPower = Range.clip(drive + strafe + turn, -1, 1);
-        double frontRightPower = Range.clip(drive - strafe - turn, -1, 1);
-        double backLeftPower = Range.clip(drive - strafe + turn, -1, 1);
-        double backRightPower = Range.clip(drive + strafe - turn, -1, 1);
+        double frontLeftPower = Range.clip(strafe + drive + turn, -1, 1);
+        double frontRightPower = Range.clip(strafe - drive - turn, -1, 1);
+        double backLeftPower = Range.clip(strafe - drive + turn, -1, 1);
+        double backRightPower = Range.clip(strafe + drive - turn, -1, 1);
 
         telemetry.addLine();
         telemetry.addData("frontLeftPower", frontLeftPower);
