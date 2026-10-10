@@ -61,7 +61,7 @@ public class DriveTrainTest extends OpMode {
         double backLeftPower = Range.clip(drive - strafe + turn, -1, 1);
         double backRightPower = Range.clip(drive + strafe - turn, -1, 1);
 
-        telemetry.addData("", null);
+        telemetry.addLine();
         telemetry.addData("frontLeftPower", frontLeftPower);
         telemetry.addData("backLeftPower", backLeftPower);
         telemetry.addData("frontRightPower", frontRightPower);
