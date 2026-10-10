@@ -47,9 +47,9 @@ public class DriveTrainTest extends OpMode {
 
     @Override
     public void loop() {
-        double drive = -gamepad1.left_stick_y; // Y stick value is reversed for some reason
+        double drive = -gamepad1.left_stick_x; // WHY DOES THIS WORK
         double turn = gamepad1.right_stick_x;
-        double strafe = gamepad1.left_stick_x;
+        double strafe = gamepad1.left_stick_y;
 
         telemetry.addData("-gamepad1.left_stick_y", -gamepad1.left_stick_y);
         telemetry.addData("-gamepad1.right_stick_y", -gamepad1.right_stick_y);
