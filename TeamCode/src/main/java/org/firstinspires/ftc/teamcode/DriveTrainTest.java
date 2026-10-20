@@ -33,8 +33,28 @@ public class DriveTrainTest extends OpMode {
 
         DcMotorEx[] drivetrain = new DcMotorEx[]{backLeftMotor, backRightMotor, frontLeftMotor, frontRightMotor};
         for (DcMotorEx motor : drivetrain) {
-            motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            //motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            //motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            // this is where i started editting!!! // this has not been tested yet
+            motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            if(gamepad1.left_stick_x ==0 && gamepad1.right_stick_x == 0 && gamepad1.left_stick_y==0){
+                int backLeft = backLeftMotor.getTargetPosition();
+                int backRight = backRightMotor.getTargetPosition();
+                int frontLeft = frontLeftMotor.getTargetPosition();
+                int frontRight = frontRightMotor.getTargetPosition();
+                //sets the target position to what it has lerned from the motors
+                backLeftMotor.setTargetPosition(backLeft);
+                backRightMotor.setTargetPosition(backRight);
+                frontLeftMotor.setTargetPosition(frontLeft);
+                frontRightMotor.setTargetPosition(frontRight);
+                //moves the motor to the target position
+                backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);  
+            }
+
+            // this is where i stoped editing!!!
         }
 
         telemetry.addData("Status", "Initialized");
