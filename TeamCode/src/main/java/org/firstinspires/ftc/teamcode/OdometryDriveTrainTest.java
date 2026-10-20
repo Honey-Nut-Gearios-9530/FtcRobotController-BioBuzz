@@ -45,8 +45,8 @@ public class OdometryDriveTrainTest extends OpMode {
         // adding Pinpoint
         pinpointOdo = hardwareMap.get(GoBildaPinpointDriver.class, "pinpoint");
 
-        // USE VALUES FROM pinpoint tuner (1 AND 2 ARE EXAMPLES FOR RIGHT NOW)
-        pinpointOdo.setOffsets(1, 2, DistanceUnit.INCH);
+        // measured 10/20/2026
+        pinpointOdo.setOffsets(-1.5, -6.5, DistanceUnit.INCH);
         pinpointOdo.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
         // might have to change pod directions
         pinpointOdo.setEncoderDirections(
