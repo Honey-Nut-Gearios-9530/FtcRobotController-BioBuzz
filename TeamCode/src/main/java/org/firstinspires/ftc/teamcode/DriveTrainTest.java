@@ -94,6 +94,7 @@ public class DriveTrainTest extends OpMode {
 //            telemetry.update();
         } else { //this is the code that moves the robot if you enter an input on the controler
             a = 0;
+            //this makes shure this hapens only once so the moters dont repetadly turn on and off
             if (b==0) {
                 backLeftMotor.setPower(0);
                 backRightMotor.setPower(0);
