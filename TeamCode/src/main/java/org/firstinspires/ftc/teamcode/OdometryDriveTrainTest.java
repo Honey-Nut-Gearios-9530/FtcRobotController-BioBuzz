@@ -72,14 +72,14 @@ public class OdometryDriveTrainTest extends OpMode {
         pinpointOdo.update();
         Pose2D pos = pinpointOdo.getPosition();
 
-        double strafe = -gamepad1.left_stick_x; // WHY DOES THIS WORK
+        double strafe = gamepad1.left_stick_x; // WHY DOES THIS WORK
         double turn = gamepad1.right_stick_x;
-        double drive = gamepad1.left_stick_y;
+        double drive = -gamepad1.left_stick_y;
 
-        double frontLeftPower = Range.clip(drive + strafe + turn, -1, 1);
-        double frontRightPower = Range.clip(drive - strafe - turn, -1, 1);
-        double backLeftPower = Range.clip(drive - strafe + turn, -1, 1);
-        double backRightPower = Range.clip(drive + strafe - turn, -1, 1);
+        double frontLeftPower = Range.clip(strafe + drive + turn, -1, 1);
+        double frontRightPower = Range.clip(strafe - drive - turn, -1, 1);
+        double backLeftPower = Range.clip(strafe - drive + turn, -1, 1);
+        double backRightPower = Range.clip(strafe + drive - turn, -1, 1);
 
         frontLeftMotor.setPower(frontLeftPower);
         backLeftMotor.setPower(backLeftPower);
