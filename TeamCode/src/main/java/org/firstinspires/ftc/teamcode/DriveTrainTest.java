@@ -27,17 +27,16 @@ public class DriveTrainTest extends OpMode {
 
         // motors on the left need to be set to reverse, motors on the right need to be set to forward
         backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        backRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         frontRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
 
         DcMotorEx[] drivetrain = new DcMotorEx[]{backLeftMotor, backRightMotor, frontLeftMotor, frontRightMotor};
         for (DcMotorEx motor : drivetrain) {
+            //this is the old breaking system.
             //motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             //motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            // this is where i started editting!!!
             motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            // this is where i stoped editing!!!
         }
 
         telemetry.addData("Status", "Initialized");
@@ -56,7 +55,6 @@ public class DriveTrainTest extends OpMode {
         double strafe = gamepad1.left_stick_x; // WHY DOES THIS WORK
         double turn = gamepad1.right_stick_x;
         double drive = -gamepad1.left_stick_y;
-        //where i started editing!!! //this code has not been tested yet
         //this is a test for a new breaking system
         //i changed it to use the double varyabls ensted of getign the gampads psotion
         if(strafe ==0 && turn == 0 && drive==0){
@@ -106,7 +104,6 @@ public class DriveTrainTest extends OpMode {
                 frontRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 b+=1;
             }
-            // where i finished editing!!!
 
             telemetry.addData("-gamepad1.left_stick_y", -gamepad1.left_stick_y);
             telemetry.addData("-gamepad1.right_stick_y", -gamepad1.right_stick_y);
