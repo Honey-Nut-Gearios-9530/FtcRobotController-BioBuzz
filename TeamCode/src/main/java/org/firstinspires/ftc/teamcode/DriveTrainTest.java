@@ -26,10 +26,10 @@ public class DriveTrainTest extends OpMode {
         frontRightMotor = hardwareMap.get(DcMotorEx.class, "frontRightMotor");
 
         // motors on the left need to be set to reverse, motors on the right need to be set to forward
-        backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        backLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         backRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        frontRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         DcMotorEx[] drivetrain = new DcMotorEx[]{backLeftMotor, backRightMotor, frontLeftMotor, frontRightMotor};
         for (DcMotorEx motor : drivetrain) {
@@ -111,8 +111,8 @@ public class DriveTrainTest extends OpMode {
             telemetry.addData("gamepad1.right_stick_x", gamepad1.right_stick_x);
 
             double frontLeftPower = Range.clip(strafe + drive + turn, -1, 1);
-            double frontRightPower = Range.clip(strafe - drive - turn, -1, 1);
-            double backLeftPower = Range.clip(strafe - drive + turn, -1, 1);
+            double frontRightPower = Range.clip(strafe - drive + turn, -1, 1);
+            double backLeftPower = Range.clip(strafe - drive - turn, -1, 1);
             double backRightPower = Range.clip(strafe + drive - turn, -1, 1);
 
             telemetry.addLine();
